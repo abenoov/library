@@ -6,15 +6,15 @@ import kz.iitu.mukhtar.library.entity.Book;
 import kz.iitu.mukhtar.library.entity.Genre;
 import kz.iitu.mukhtar.library.services.BookService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-@Component
+@RestController
+@RequestMapping("/books")
 public class BookController {
-
-    private Scanner sc = new Scanner(System.in);
-
 
     private final BookService bookService;
     private final AuthorController authorController;
@@ -24,41 +24,20 @@ public class BookController {
         this.authorController = authorController;
     }
 
-    public void showMenu(){
-        System.out.println("1. Show all books");
-        System.out.println("3. Find book");
+    @GetMapping("")
+    public List<Book> showAllBooks(){
+        return bookService.showAllBooks();
     }
 
-    public void choice(int choice){
-        switch (choice){
-            case 1:
-                showAllBooks();
-                break;
-            case 2:
-                findBook();
-                break;
-            default:
-                System.out.println("No such choice");
-                break;
-        }
-    }
-
-    public void showAllBooks(){
-        bookService.showAllBooks();
-    }
-
-
-    public Book findBookById(){
-        System.out.println("Enter book ID: ");
-        Long id = sc.nextLong();
+    @GetMapping("/{id}")
+    public Book findBookById(@PathVariable Long id){
         return bookService.findBookById(id).orElse(null);
     }
 
-    public void findBook(){
-        System.out.println("Look in book by name or description");
-        String search = sc.nextLine();
+    @GetMapping("/find/")
+    public List<Book> findBook(@RequestParam("search") String search){
         search = search.toLowerCase();
-        bookService.findBook(search);
+        return bookService.findBook(search);
     }
 
 }

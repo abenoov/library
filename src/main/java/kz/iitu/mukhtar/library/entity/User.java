@@ -1,9 +1,12 @@
 package kz.iitu.mukhtar.library.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 @Entity
 @Table(name = "Users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "book"})
 public class User {
 
     @Id

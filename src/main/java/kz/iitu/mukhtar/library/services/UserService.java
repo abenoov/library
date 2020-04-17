@@ -7,7 +7,7 @@ import kz.iitu.mukhtar.library.repository.BookRepository;
 import kz.iitu.mukhtar.library.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -48,10 +48,8 @@ public class UserService {
     }
 
 
-    public void showAllUsers() {
-        for (User user : userRepository.findAll()) {
-            System.out.println(user.toString());
-        }
+    public List<User> showAllUsers() {
+        return userRepository.findAll();
     }
 
 }

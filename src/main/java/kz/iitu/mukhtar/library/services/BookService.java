@@ -5,6 +5,7 @@ import kz.iitu.mukhtar.library.repository.BookRepository;
 import kz.iitu.mukhtar.library.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -18,20 +19,16 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public void showAllBooks(){
-        for (Book book: bookRepository.findAll()){
-            System.out.println(book.toString());
-        }
+    public List<Book> showAllBooks(){
+      return bookRepository.findAll();
     }
 
     public void addBook(Book book){
         bookRepository.save(book);
     }
 
-    public void findBook(String search){
-        for (Book book: bookRepository.findAllByTitleIsContainingOrDescriptionContaining(search)){
-            System.out.println(book.toString());
-        }
+    public List<Book> findBook(String search){
+        return bookRepository.findAllByTitleIsContainingOrDescriptionContaining(search);
     }
 
     public Optional<Book> findBookById(Long id){

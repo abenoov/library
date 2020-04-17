@@ -16,10 +16,8 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public void showAllAuthors(){
-        for(Author author: authorRepository.findAll()){
-            System.out.println("Author's ID: " + author.getId() + " " + "Author's name: " + author.getName());
-        }
+    public List<Author> showAllAuthors(){
+        return authorRepository.findAll();
     }
 
     public Optional<Author> getAuthorById(Long id){
@@ -27,7 +25,7 @@ public class AuthorService {
     }
 
     public List<Author> getAuthorByName(String name){
-        return authorRepository.findAuthorByName(name);
+        return authorRepository.findAuthorByNameContains(name);
     }
 
 }
