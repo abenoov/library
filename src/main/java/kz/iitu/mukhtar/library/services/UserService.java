@@ -5,13 +5,16 @@ import kz.iitu.mukhtar.library.entity.Book;
 import kz.iitu.mukhtar.library.entity.User;
 import kz.iitu.mukhtar.library.repository.BookRepository;
 import kz.iitu.mukhtar.library.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
@@ -52,4 +55,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null)
+            throw new UsernameNotFoundException("User with username: " + username + " is not found");
+
+        return user;
+    }
 }
