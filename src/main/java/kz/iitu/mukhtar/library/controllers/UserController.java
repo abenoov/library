@@ -1,5 +1,6 @@
 package kz.iitu.mukhtar.library.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import kz.iitu.mukhtar.library.entity.Author;
 import kz.iitu.mukhtar.library.entity.Book;
 import kz.iitu.mukhtar.library.entity.User;
@@ -24,16 +25,19 @@ public class UserController {
         this.bookController = bookController;
     }
 
+    @ApiOperation(value = "Returns all users in the database", response = List.class)
     @GetMapping("")
     public List<User> shooAllUsers(){
         return userService.showAllUsers();
     }
 
+    @ApiOperation(value = "Returns user by id", response = User.class)
     @GetMapping("/{id}")
     public User findUserById(@PathVariable("id") Long id){
         return userService.findUserById(id).orElse(null);
     }
 
+    @ApiOperation(value = "Issue book to a user")
     @PostMapping("/issue/")
     public void issueBook(@RequestParam("user_id") Long userId,@RequestParam("book_id") Long bookId){
         User user = findUserById(userId);
@@ -41,6 +45,7 @@ public class UserController {
         userService.issueBook(user, book);
     }
 
+    @ApiOperation(value = "Return book")
     @PostMapping("/return/")
     public void returnTheBook(@RequestParam("user_id") Long userId,@RequestParam("book_id") Long bookId){
         User user = findUserById(userId);

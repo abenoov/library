@@ -1,5 +1,6 @@
 package kz.iitu.mukhtar.library.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import kz.iitu.mukhtar.library.entity.Author;
 import kz.iitu.mukhtar.library.services.AuthorService;
 import org.springframework.stereotype.Component;
@@ -19,16 +20,19 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
+    @ApiOperation(value = "Returns all authors in the database", response = List.class)
     @GetMapping("")
     public List<Author> showAllAuthors(){
         return authorService.showAllAuthors();
     }
 
+    @ApiOperation(value = "Returns authors by id", response = Author.class)
     @GetMapping("/{id}")
     public Author getAuthorById(@PathVariable("id") Long id){
         return authorService.getAuthorById(id).get();
     }
 
+    @ApiOperation(value = "Search authors", response = List.class)
     @GetMapping("/find/")
     public List<Author> getAuthorByName(@RequestParam("name") String name){
         return authorService.getAuthorByName(name);
